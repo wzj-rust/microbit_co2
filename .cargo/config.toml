@@ -16,5 +16,9 @@ rustflags = [
 [build]
 target = "thumbv7em-none-eabihf"
 
+# tip: run `cargo clean` after changing these values
 [env]
+# default = "error". other options: trace、debug、warn、off
+# to set by module: "warn,{crate}::{mod}=trace"
 DEFMT_LOG = "debug"
+DEFMT_RTT_BUFFER_SIZE = "1024"

@@ -1,6 +1,7 @@
 #![no_std]
 #![no_main]
 
+mod ble;
 mod display;
 mod sense;
 
@@ -16,4 +17,6 @@ async fn main(spawner: Spawner) {
     let b = Microbit::default();
     spawner.must_spawn(sense::sense_task(b.twispi0, b.p20, b.p19));
     spawner.must_spawn(display::display_task(b.display));
+    let (sdc, mpsl) = b.ble.init(b.timer0, b.rng).unwrap();
+    ble::run(sdc, mpsl, spawner).await;
 }
